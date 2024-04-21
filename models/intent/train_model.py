@@ -12,6 +12,8 @@ data = pd.read_csv(train_file, delimiter=',')
 queries = data['query'].tolist()
 intents = data['intent'].tolist()
 
+print(set(intents))
+
 from utils.Preprocess import Preprocess
 p = Preprocess(word2index_dic='./train_tools/dict/chatbot_dict.bin',
                userdic='./utils/user_dic.tsv')
@@ -85,8 +87,8 @@ concat = concatenate([pool1, pool2, pool3])
 
 hidden = Dense(128, activation=tf.nn.relu)(concat)
 dropout_hidden = Dropout(rate=dropout_prob)(hidden)
-logits = Dense(5, name='logits')(dropout_hidden)
-predictions = Dense(5, activation=tf.nn.softmax)(logits)
+logits = Dense(9, name='logits')(dropout_hidden) # 출력 개수 잘 맞춰주기
+predictions = Dense(9, activation=tf.nn.softmax)(logits) # 출력 개수 잘 맞춰주기
 
 
 # 모델 생성  ○5
