@@ -29,9 +29,9 @@ while True:
     data = mySocket.recv(2048).decode()
     ret_data = json.loads(data)
     print("답변 : ")
-    print(ret_data['Answer'])
+    #print(ret_data['Answer'])
     #print(ret_data)
-    #print(type(ret_data))
+    print(type(ret_data))
     print("\n")
 
     # 챗봇 엔진 서버 연결 소켓 닫기

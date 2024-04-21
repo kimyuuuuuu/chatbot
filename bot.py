@@ -46,6 +46,7 @@ def to_client(conn, addr, params):
         # 의도 파악
         intent_predict = intent.predict_class(query)
         intent_name = intent.labels[intent_predict]
+        print(intent_name)
 
         # 개체명 파악
         ner_predicts = ner.predict(query)
