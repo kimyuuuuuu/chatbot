@@ -13,16 +13,23 @@ def read_corpus_data(filename):
 
 
 # 말뭉치 데이터 가져오기
-corpus_data = read_corpus_data('C:\\chatbot\\train_tools\\dict\\corpus.txt')
-
+corpus_data = read_corpus_data('C:\\chatbot\\train_tools\\dict\\corpus_new.txt')
+# corpus_data = corpus_data[:3]
+# print(corpus_data)
+# print(corpus_data[1])
 
 # 말뭉치 데이터에서 키워드만 추출해서 사전 리스트 생성
 p = Preprocess()
 dict = []
 for c in corpus_data:
-    pos = p.pos(c[1]) # pos : 형태소 분석 , 토큰과 품사 태그 쌍 return 
-    for k in pos:
-        dict.append(k[0])
+    try :
+        pos = p.pos(c[1]) # pos : 형태소 분석 , 토큰과 품사 태그 쌍 return 
+        for k in pos:
+            dict.append(k[0])
+    except Exception as e :
+        print(e)
+        print(c) # index out of range 탐색용 
+                 # data에 오류가 있었음. 수정 완료
 
 # 사전에 사용될 word2index 생성
 # 사전의 첫번 째 인덱스에는 OOV 사용
