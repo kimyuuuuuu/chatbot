@@ -52,7 +52,7 @@ test_ds = ds.skip(train_size + val_size).take(test_size).batch(20)
 # 하이퍼 파라미터 설정
 dropout_prob = 0.5
 EMB_SIZE = 128
-EPOCH = 5
+EPOCH = 200
 VOCAB_SIZE = len(p.word_index) + 1 #전체 단어 개수
 
 
