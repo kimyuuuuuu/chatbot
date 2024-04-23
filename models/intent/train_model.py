@@ -34,7 +34,7 @@ padded_seqs = preprocessing.sequence.pad_sequences(sequences, maxlen=MAX_SEQ_LEN
 
 # (105658, 15)
 print(padded_seqs.shape)
-print(len(intents)) #105658
+print(len(intents)) #105658밴쿠버 국제공항xhfhs
 
 # 학습용, 검증용, 테스트용 데이터셋 생성 ○3
 # 학습셋:검증셋:테스트셋 = 7:2:1

@@ -41,7 +41,7 @@ def insert_data(db, xls_row):
         db.commit()
 
 
-train_file = './train_tools/qna/train_data.xlsx'
+train_file = './train_tools/qna/train_data3.xlsx'
 db = None
 try:
     # DB 호스트 정보에 맞게 입력해주세요
