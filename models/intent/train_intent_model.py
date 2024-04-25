@@ -7,7 +7,7 @@ from tensorflow.keras.layers import Input, Embedding, Dense, Dropout, Conv1D, Gl
 
 
 # 데이터 읽어오기
-train_file = "./models/intent/total_train_data.csv"
+train_file = "./models/intent/total_train_data_3.csv"
 data = pd.read_csv(train_file, delimiter=',')
 queries = data['query'].tolist()
 intents = data['intent'].tolist()
