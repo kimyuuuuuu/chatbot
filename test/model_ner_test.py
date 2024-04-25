@@ -6,7 +6,7 @@ p = Preprocess(word2index_dic='./train_tools/dict/chatbot_dict.bin',
 
 
 ner = NerModel(model_name='./models/ner/ner_model.h5', proprocess=p)
-query = '오늘 오전 13시 2분에 탕수육 주문 하고 싶어요'
+query = '프레이즈에 대해 알려줘'
 predicts = ner.predict(query)
 tags = ner.predict_tags(query)
 print(predicts)

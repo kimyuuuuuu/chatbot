@@ -4,11 +4,12 @@ import tensorflow as tf
 from tensorflow.keras import preprocessing
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Embedding, Dense, Dropout, Conv1D, GlobalMaxPool1D, concatenate
+from keras.callbacks import EarlyStopping
 
 
 # 데이터 읽어오기
-train_file = "./models/intent/total_train_data_3.csv"
-data = pd.read_csv(train_file, delimiter=',')
+train_file = "./models/intent/total_train_data.csv"
+data = pd.read_csv(train_file, delimiter=',', encoding='UTF-8-SIG')
 queries = data['query'].tolist()
 intents = data['intent'].tolist()
 
@@ -101,9 +102,12 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
+early_stopping = EarlyStopping()
+
+EarlyStopping(monitor='val_loss', min_delta=20, patience=25, mode='auto')
 
 # 모델 학습 ○6
-model.fit(train_ds, validation_data=val_ds, epochs=EPOCH, verbose=1)
+model.fit(train_ds, validation_data=val_ds, epochs=EPOCH, verbose=1, callbacks = [early_stopping])
 
 
 # 모델 평가(테스트 데이터 셋 이용) ○7
