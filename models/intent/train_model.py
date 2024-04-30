@@ -8,8 +8,8 @@ from keras.callbacks import EarlyStopping
 
 
 # 데이터 읽어오기
-train_file = "./models/intent/total_train_data.csv"
-data = pd.read_csv(train_file, delimiter=',', encoding='UTF-8-SIG')
+train_file = "./models/intent/total_train_data_4.csv"
+data = pd.read_csv(train_file, delimiter=',', encoding='utf8')
 queries = data['query'].tolist()
 intents = data['intent'].tolist()
 
@@ -21,16 +21,16 @@ p = Preprocess(word2index_dic='./train_tools/dict/chatbot_dict.bin',
 
 # 단어 시퀀스 생성
 sequences = []
-#line = 2
+# line = 1
 for sentence in queries:
-    #line += 1
-    #try :
-    pos = p.pos(sentence)
-    keywords = p.get_keywords(pos, without_tag=True)
-    seq = p.get_wordidx_sequence(keywords)
-    sequences.append(seq)
-    #except :
-    #    print(line, sentence)
+    # line += 1
+    # try :
+        pos = p.pos(sentence)
+        keywords = p.get_keywords(pos, without_tag=True)
+        seq = p.get_wordidx_sequence(keywords)
+        sequences.append(seq)
+    # except :
+    #     print(line, sentence)
 
 # 단어 인덱스 시퀀스 벡터 ○2
 # 단어 시퀀스 벡터 크기
