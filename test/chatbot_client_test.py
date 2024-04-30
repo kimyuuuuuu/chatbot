@@ -20,7 +20,7 @@ while True:
     # 챗봇 엔진 질의 요청
     json_data = {
         'Query': query,
-        'BotType': "MyService"
+        'BotType': "MyService">
     }
     message = json.dumps(json_data)
     mySocket.send(message.encode())

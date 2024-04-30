@@ -25,7 +25,7 @@ p = Preprocess(word2index_dic='./train_tools/dict/chatbot_dict.bin',
                userdic='./utils/user_dic.tsv')
 
 # 학습용 말뭉치 데이터를 불러옴
-corpus = read_file('./models/ner/ner_train.txt')
+corpus = read_file('./models/ner/ner_train_2.txt')
 
 # 말뭉치 데이터에서 단어와 BIO 태그만 불러와 학습용 데이터셋 생성
 sentences, tags = [], []
