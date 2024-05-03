@@ -30,7 +30,7 @@ while True:
     ret_data = json.loads(data)
     print("답변 : ")
     print(ret_data['Answer'])
-    #print(ret_data)
+    print(ret_data)
     print(type(ret_data))
     print("\n")
 
