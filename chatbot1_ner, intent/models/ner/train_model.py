@@ -25,7 +25,7 @@ p = Preprocess(word2index_dic='./train_tools/dict/chatbot_dict.bin',
                userdic='./utils/user_dic.tsv')
 
 # 학습용 말뭉치 데이터를 불러옴
-corpus = read_file('./models/ner/ner_train_3.txt')
+corpus = read_file('./models/ner/테스트용 품사없는 전체 NER2.txt')
 
 # 말뭉치 데이터에서 단어와 BIO 태그만 불러와 학습용 데이터셋 생성
 sentences, tags = [], []
@@ -33,9 +33,9 @@ for t in corpus:
     tagged_sentence = []
     sentence, bio_tag = [], []
     for w in t:
-        tagged_sentence.append((w[1], w[3]))
+        tagged_sentence.append((w[1], w[2]))
         sentence.append(w[1])
-        bio_tag.append(w[3])
+        bio_tag.append(w[2])
     
     sentences.append(sentence)
     tags.append(bio_tag)
@@ -63,6 +63,15 @@ y_train = tag_tokenizer.texts_to_sequences(tags)
 
 index_to_ner = tag_tokenizer.index_word # 시퀀스 인덱스를 NER로 변환 하기 위해 사용
 index_to_ner[0] = 'PAD'
+
+# 태그 토크나이저에서 각 태그의 인덱스를 가져오기
+tag_index = tag_tokenizer.word_index
+print("태그 인덱스:\n", tag_index)
+
+# 인덱스를 태그로 변환하는 사전도 출력해 볼 수 있습니다
+index_to_tag = {i: t for t, i in tag_index.items()}
+print("인덱스를 태그로 변환:\n", index_to_tag)
+
 
 # 시퀀스 패딩 처리
 max_len = 40
@@ -97,7 +106,7 @@ model.compile(loss='categorical_crossentropy', optimizer=Adam(0.01), metrics=['a
 model.fit(x_train, y_train, batch_size=128, epochs=10)
 
 print("평가 결과 : ", model.evaluate(x_test, y_test)[1])
-model.save('./models/ner/ner_model.h5')
+model.save('./models/ner/ner_model_testNER2.h5')
 
 
 # 시퀀스를 NER 태그로 변환

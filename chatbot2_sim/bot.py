@@ -52,21 +52,23 @@ def to_client(conn, addr, params):
         embedding_data = sim.create_pt(query)
 
         # 답변 검색
-        try:
-            f = FindAnswer(db)
-            answer_text, answer_image, highest_similarity = f.search(intent_name, embedding_data)
+        f = FindAnswer(db)
+        if f != None :
+            if intent_name == '인사' or intent_name == '욕설' or intent_name == '기타' :
+                answer_text, answer_image = f.search_1(intent_name)
 
-        except:
+            else : 
+                answer_text, answer_image = f.search_2(intent_name, embedding_data)
+        
+        else:
             answer_text = "죄송해요 무슨 말인지 모르겠어요. 조금 더 공부 할게요."
             answer_image = None
-            highest_similarity = None
 
         send_json_data_str = {
             "Query" : query,
             "Answer": answer_text,
             "AnswerImageUrl" : answer_image,
-            "Intent": intent_name,
-            "sim" : highest_similarity
+            "Intent": intent_name
         }
         message = json.dumps(send_json_data_str)
         conn.send(message.encode())

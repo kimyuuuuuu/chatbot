@@ -22,7 +22,7 @@ class FindAnswer:
         return sql
 
     # 답변 검색
-    def search(self, intent_name, ner_tags):
+    def search_1(self, intent_name, ner_tags):
         # 의도명, 개체명으로 답변 검색
         sql = self._make_query(intent_name, ner_tags)
         answer = self.db.select_one(sql)
