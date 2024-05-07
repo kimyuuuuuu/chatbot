@@ -1,6 +1,15 @@
+import torch
+from sentence_transformers import util
+import numpy as np
+
 class FindAnswer:
     def __init__(self, db):
         self.db = db
+        # 미리 학습된 SBERT 임베딩 데이터 로드
+        self.sim_data = torch.load('chatbot2_sim/models/sim/SBERT_embedding_Data.pt')
+        
+        # 해당 임베딩 데이터에 대한 매핑 정보를 로드하여 DataFrame으로 읽음
+        self.data_mapping = pd.read_excel('chatbot2_sim/models/sim/train_data_SBERT.xlsx')
 
     # 검색 쿼리 생성
     def _make_query(self, intent_name, ner_tags):
@@ -21,27 +30,21 @@ class FindAnswer:
         sql = sql + " order by rand() limit 1"
         return sql
 
-    # 답변 검색
-    def search(self, intent_name, ner_tags):
-        # 의도명, 개체명으로 답변 검색
-        sql = self._make_query(intent_name, ner_tags)
-        answer = self.db.select_one(sql)
 
-        # 검색되는 답변이 없으면 의도명만 검색
-        if answer is None:
-            sql = self._make_query(intent_name, None)
-            answer = self.db.select_one(sql)
+    # 답변 검색
+    def search(self, intent_name, embedding_data):
+        # 유사도 분석 데이터
+        sim_data = torch.load('chatbot2_sim/models/sim/SBERT_embedding_Data.pt')
+
+        cos_sim = util.cos_sim(embedding_data, sim_data)
+        best_sim_idx = int(np.argmax(cos_sim)) # cos_sim의 최대값의 인덱스 반환
+        
+
+        if self.df
+            
 
         return (answer['answer'], answer['answer_image'])
 
-    # NER 태그를 실제 입력된 단어로 변환
-    def tag_to_word(self, ner_predicts, answer):
-        for word, tag in ner_predicts:
+            
 
-            # 변환해야하는 태그가 있는 경우 추가
-            if tag == 'B_FOOD' or tag == 'B_DT' or tag == 'B_TI':
-                answer = answer.replace(tag, word)
-
-        answer = answer.replace('{', '')
-        answer = answer.replace('}', '')
-        return answer
+        return (answer['answer'], answer['answer_image'])

@@ -11,14 +11,14 @@ from chatbot2_sim.utils.FindAnswer import FindAnswer
 
 
 # 전처리 객체 생성
-p = Preprocess(word2index_dic='train_tools/dict/chatbot_dict.bin',
-               userdic='utils/user_dic.tsv')
+p = Preprocess(word2index_dic='chatbot2_sim/train_tools/dict/chatbot_dict.bin',
+               userdic='chatbot2_sim/utils/user_dic.tsv')
 
 # 의도 파악 모델
-intent = IntentModel(model_name='models/intent/intent_model.h5', proprocess=p)
+intent = IntentModel(model_name='chatbot2_sim/models/intent/intent_model.h5', preprocess=p)
 
 # 유사도 분석 모델
-sim = SimModel(proprocess=p)
+sim = SimModel(preprocess=p)
 
 
 def to_client(conn, addr, params):
@@ -48,26 +48,25 @@ def to_client(conn, addr, params):
         intent_name = intent.labels[intent_predict]
         print(intent_name)
 
-        # 유사도 분석
+        # 질문 임베딩
         embedding_data = sim.create_pt(query)
-
 
         # 답변 검색
         try:
             f = FindAnswer(db)
-            answer_text, answer_image = f.search(intent_name)
-            answer = f.tag_to_word(ner_predicts, answer_text)
+            answer_text, answer_image, highest_similarity = f.search(intent_name, embedding_data)
 
         except:
-            answer = "죄송해요 무슨 말인지 모르겠어요. 조금 더 공부 할게요."
+            answer_text = "죄송해요 무슨 말인지 모르겠어요. 조금 더 공부 할게요."
             answer_image = None
+            highest_similarity = None
 
         send_json_data_str = {
             "Query" : query,
-            "Answer": answer,
+            "Answer": answer_text,
             "AnswerImageUrl" : answer_image,
             "Intent": intent_name,
-            "NER": str(ner_predicts)
+            "sim" : highest_similarity
         }
         message = json.dumps(send_json_data_str)
         conn.send(message.encode())
