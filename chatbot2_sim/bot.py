@@ -1,13 +1,13 @@
 import threading
 import json
 
-from config.DatabaseConfig import *
-from utils.Database import Database
-from utils.BotServer import BotServer
-from utils.Preprocess import Preprocess
-from models.intent.IntentModel import IntentModel
-from models.ner.NerModel import NerModel
-from utils.FindAnswer import FindAnswer
+from chatbot2_sim.config.DatabaseConfig import *
+from chatbot2_sim.utils.Database import Database
+from chatbot2_sim.utils.BotServer import BotServer
+from chatbot2_sim.utils.Preprocess import Preprocess
+from chatbot2_sim.models.intent.IntentModel import IntentModel
+from chatbot2_sim.models.sim.SimModel import SimModel
+from chatbot2_sim.utils.FindAnswer import FindAnswer
 
 
 # 전처리 객체 생성
@@ -17,8 +17,8 @@ p = Preprocess(word2index_dic='train_tools/dict/chatbot_dict.bin',
 # 의도 파악 모델
 intent = IntentModel(model_name='models/intent/intent_model.h5', proprocess=p)
 
-# 개체명 인식 모델
-ner = NerModel(model_name='models/ner/ner_model.h5', proprocess=p)
+# 유사도 분석 모델
+sim = SimModel(proprocess=p)
 
 
 def to_client(conn, addr, params):
@@ -48,15 +48,14 @@ def to_client(conn, addr, params):
         intent_name = intent.labels[intent_predict]
         print(intent_name)
 
-        # 개체명 파악
-        ner_predicts = ner.predict(query)
-        ner_tags = ner.predict_tags(query)
+        # 유사도 분석
+        embedding_data = sim.create_pt(query)
 
 
         # 답변 검색
         try:
             f = FindAnswer(db)
-            answer_text, answer_image = f.search(intent_name, ner_tags)
+            answer_text, answer_image = f.search(intent_name)
             answer = f.tag_to_word(ner_predicts, answer_text)
 
         except:
