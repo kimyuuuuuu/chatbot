@@ -40,8 +40,6 @@ class FindAnswer:
         # 유사도 분석 데이터
         sim_data = torch.load('chatbot2_sim/models/sim/SBERT_embedding_Data.pt')
 
-        df = pd.read_excel('C:\\chatbot\\chatbot2_sim\\train_tools\\qna\\train_data_5.xlsx')
-
         cos_sim = util.cos_sim(embedding_data, sim_data)
         best_sim_idx = int(np.argmax(cos_sim)) # cos_sim의 최대값의 인덱스 반환
         best_sim = cos_sim[0, best_sim_idx].item()  # item()을 사용하여 Python float으로 변환

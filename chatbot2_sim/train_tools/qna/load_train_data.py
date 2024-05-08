@@ -41,7 +41,7 @@ def insert_data(db, xls_row):
         db.commit()
 
 
-train_file = './chatbot2_sim/train_tools/qna/train_data_최종.xlsx'
+train_file = './chatbot2_sim/train_tools/qna/train_data_final.xlsx'
 db = None
 try:
     # DB 호스트 정보에 맞게 입력해주세요

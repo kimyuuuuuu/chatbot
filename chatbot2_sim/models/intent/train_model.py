@@ -18,7 +18,7 @@ print(set(intents))
 from chatbot2_sim.utils.Preprocess import Preprocess
 p = Preprocess(word2index_dic='./chatbot2_sim/train_tools/dict/chatbot_dict.bin',
                userdic='./chatbot2_sim/utils/user_dic.tsv')
-7
+
 # 단어 시퀀스 생성
 sequences = []
 # line = 1
