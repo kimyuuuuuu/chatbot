@@ -8,7 +8,7 @@ from keras.callbacks import EarlyStopping
 
 
 # 데이터 읽어오기
-train_file = "./chatbot2_sim/models/intent/total_train_data_4.csv"
+train_file = "./chatbot2_sim/models/intent/total_train_data_5.csv"
 data = pd.read_csv(train_file, delimiter=',', encoding='utf8')
 queries = data['query'].tolist()
 intents = data['intent'].tolist()
