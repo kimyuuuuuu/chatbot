@@ -9,7 +9,7 @@ embedding_data = torch.load('C:\chatbot\chatbot2_sim\models\sim\SBERT_embedding_
 df = pd.read_excel('C:\\chatbot\\chatbot2_sim\\train_tools\\qna\\train_data_5.xlsx')
 
 # 질문 예시 문장
-sentence = "동아리 어떻게 만들어"
+sentence = "스핀 SPIN에 대해 알려줘"
 print("질문 문장 : ",sentence)
 # sentence = sentence.replace(" ","")
 # print("공백 제거 문장 : ", sentence)
