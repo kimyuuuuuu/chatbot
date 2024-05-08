@@ -8,7 +8,7 @@ from keras.callbacks import EarlyStopping
 
 
 # 데이터 읽어오기
-train_file = "./chatbot2_sim/models/intent/total_train_data_5.csv"
+train_file = "./chatbot2_sim/models/intent/total_train_data_최종.csv"
 data = pd.read_csv(train_file, delimiter=',', encoding='utf8')
 queries = data['query'].tolist()
 intents = data['intent'].tolist()
@@ -92,8 +92,8 @@ concat = concatenate([pool1, pool2, pool3])
 
 hidden = Dense(128, activation=tf.nn.relu)(concat)
 dropout_hidden = Dropout(rate=dropout_prob)(hidden)
-logits = Dense(9, name='logits')(dropout_hidden) # 출력 개수 잘 맞춰주기
-predictions = Dense(9, activation=tf.nn.softmax)(logits) # 출력 개수 잘 맞춰주기
+logits = Dense(11, name='logits')(dropout_hidden) # 출력 개수 잘 맞춰주기
+predictions = Dense(11, activation=tf.nn.softmax)(logits) # 출력 개수 잘 맞춰주기
 
 
 # 모델 생성  ○5
@@ -108,7 +108,6 @@ EarlyStopping(monitor='val_loss', min_delta=20, patience=25, mode='auto')
 
 # 모델 학습 ○6
 model.fit(train_ds, validation_data=val_ds, epochs=EPOCH, verbose=1, callbacks = [early_stopping])
-
 
 # 모델 평가(테스트 데이터 셋 이용) ○7
 loss, accuracy = model.evaluate(test_ds, verbose=1)
