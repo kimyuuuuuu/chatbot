@@ -60,9 +60,6 @@ def to_client(conn, addr, params):
             else : 
                 answer_text, answer_image = f.search_2(intent_name, embedding_data)
         
-        else:
-            answer_text = "죄송해요 무슨 말인지 모르겠어요. 조금 더 공부 할게요."
-            answer_image = None
 
         send_json_data_str = {
             "Query" : query,

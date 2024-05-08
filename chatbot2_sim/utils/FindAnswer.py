@@ -54,5 +54,14 @@ class FindAnswer:
         if answer['intent'] == intent_name :
             #answer = df['답변(Answer)'][best_sim_idx]
             #imageUrl = df['답변 이미지'][best_sim_idx]
+            print("True")
             return (answer['answer'], answer['answer_image'])
             #return (answer, imageUrl)
+            
+
+        else :
+            print("False")
+            answer_text = "죄송해요 무슨 말인지 모르겠어요. 조금 더 공부 할게요."
+            answer_image = None
+
+            return (answer_text, answer_image)
