@@ -8,7 +8,7 @@ from sentence_transformers import SentenceTransformer
 from chatbot2_sim.utils.Preprocess import Preprocess
 
 # 데이터 읽어오기
-train_file = "./chatbot2_sim/models/sim/train_data_5.xlsx"
+train_file = "./chatbot2_sim/models/sim/train_data_최종.xlsx"
 data = pd.read_excel(train_file)
 queries = data['질문(Query)'].tolist() 
 

@@ -6,10 +6,10 @@ from sentence_transformers import SentenceTransformer, util
 
 model = SentenceTransformer('snunlp/KR-SBERT-V40K-klueNLI-augSTS')
 embedding_data = torch.load('C:\chatbot\chatbot2_sim\models\sim\SBERT_embedding_Data.pt')
-df = pd.read_excel('C:\\chatbot\\chatbot2_sim\\train_tools\\qna\\train_data_5.xlsx')
+df = pd.read_excel('C:\\chatbot\\chatbot2_sim\\train_tools\\qna\\train_data_최종.xlsx')
 
 # 질문 예시 문장
-sentence = "스핀 SPIN에 대해 알려줘"
+sentence = "CCC 동아리가 중앙동아리인지 가동아리인지 알려줘"
 print("질문 문장 : ",sentence)
 # sentence = sentence.replace(" ","")
 # print("공백 제거 문장 : ", sentence)

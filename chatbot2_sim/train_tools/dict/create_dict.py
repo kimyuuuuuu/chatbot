@@ -11,7 +11,7 @@ def read_corpus_data(filename) :
   return data
 
 # 말뭉치 데이터 가져오기
-corpus_data = read_corpus_data('chatbot2_sim/train_tools/dict/corpus_4.txt')
+corpus_data = read_corpus_data('chatbot2_sim/train_tools/dict/corpus_final.txt')
 
 # 말뭉치 데이터에서 키워드만 추출해서 사전 리스트 생성
 p = Preprocess()
