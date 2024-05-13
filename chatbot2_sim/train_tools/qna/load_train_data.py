@@ -41,7 +41,7 @@ def insert_data(db, xls_row):
         db.commit()
 
 
-train_file = './chatbot2_sim/train_tools/qna/train_data_final.xlsx'
+train_file = './chatbot2_sim/train_tools/qna/train_data_최종1.xlsx'
 db = None
 try:
     # DB 호스트 정보에 맞게 입력해주세요
@@ -57,7 +57,7 @@ try:
 
     # 학습 엑셀 파일 불러오기
     wb = openpyxl.load_workbook(train_file)
-    sheet = wb['시트1'] # 시트명 확인 잘 하기 
+    sheet = wb['train_data_최종'] # 시트명 확인 잘 하기 
     for row in sheet.iter_rows(min_row=2): # 해더는 불러오지 않음
         # 데이터 저장
         insert_data(db, row) # too many values to unpack (expected 5) => .xlsx파일에 빈 열이 생기지 않았는지 확인
