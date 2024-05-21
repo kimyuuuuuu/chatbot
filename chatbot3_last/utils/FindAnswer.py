@@ -2,6 +2,7 @@ import torch
 from sentence_transformers import util
 import numpy as np
 import pandas as pd
+
 class FindAnswer:
     def __init__(self, db):
         self.db = db
@@ -63,3 +64,6 @@ class FindAnswer:
             answer_image = None
 
             return (answer_text, answer_image, 'False')
+        
+    def search_3(self, intent_name, ner_tag) :
+        

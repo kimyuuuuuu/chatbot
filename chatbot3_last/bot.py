@@ -58,8 +58,11 @@ def to_client(conn, addr, params):
           if intent_name == '인사' or intent_name == '욕설' or intent_name == '기타' :
               answer_text, answer_image, sim_result = f.search_1(intent_name)
 
-          else : 
+          elif intent_name == '생성': 
               answer_text, answer_image, sim_result = f.search_2(intent_name, embedding_data)
+
+          else :
+              answer_text, answer_image, sim_result = f.search_3(intent_name)
 
       log = f"{query},{intent_name},{answer_text},{sim_result}"
 
