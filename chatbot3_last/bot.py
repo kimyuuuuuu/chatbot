@@ -56,18 +56,18 @@ def to_client(conn, addr, params):
       f = FindAnswer(db)
       if f != None :
           if intent_name == '인사' or intent_name == '욕설' or intent_name == '기타' :
-              answer_text, answer_image, sim_result = f.search_1(intent_name)
+              answer_text, answer_image = f.search_1(intent_name)
 
           elif intent_name == '생성': 
-              answer_text, answer_image, sim_result = f.search_2(intent_name, embedding_data)
+              answer_text, answer_image = f.search_2(intent_name, embedding_data)
 
           else :
-              answer_text, answer_image, sim_result = f.search_3(intent_name)
+              answer_text, answer_image = f.search_3(intent_name, )
 
-      log = f"{query},{intent_name},{answer_text},{sim_result}"
+      #log = f"{query},{intent_name},{answer_text},{sim_result}"
 
-      with open('./chatbot3_last/log.txt', 'a',encoding='utf-8') as log_file:
-          log_file.write(log + '\n')
+      #with open('./chatbot3_last/log.txt', 'a',encoding='utf-8') as log_file:
+      #    log_file.write(log + '\n')
 
       send_json_data_str = {
           "Query" : query,

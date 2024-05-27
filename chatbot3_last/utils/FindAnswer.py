@@ -33,7 +33,7 @@ class FindAnswer:
         sql = self._make_query_1(intent_name)
         answer = self.db.select_one(sql)
 
-        return (answer['answer'], answer['answer_image'], 'NO')
+        return (answer['answer'], answer['answer_image'])
 
 
     # 답변 검색
@@ -54,7 +54,7 @@ class FindAnswer:
             #answer = df['답변(Answer)'][best_sim_idx]
             #imageUrl = df['답변 이미지'][best_sim_idx]
             print("True")
-            return (answer['answer'], answer['answer_image'], 'True')
+            return (answer['answer'], answer['answer_image'])
             #return (answer, imageUrl)
             
 
@@ -63,7 +63,7 @@ class FindAnswer:
             answer_text = "죄송해요 무슨 말인지 모르겠어요. 조금 더 공부 할게요."
             answer_image = None
 
-            return (answer_text, answer_image, 'False')
+            return (answer_text, answer_image)
         
-    def search_3(self, intent_name, ner_tag) :
+    # def search_3(self, intent_name, ner_tag) :
         
