@@ -1,26 +1,27 @@
 import threading
 import json
 
-from chatbot3_last.config.DatabaseConfig import *
-from chatbot3_last.utils.Database import Database
-from chatbot3_last.utils.BotServer import BotServer
-from chatbot3_last.utils.Preprocess import Preprocess
-from chatbot3_last.models.intent.IntentModel import IntentModel
-from chatbot3_last.models.sim.SimModel import SimModel
-from chatbot3_last.utils.FindAnswer import FindAnswer
-from chatbot3_last.utils.save_conversation import save_conversation
-
+from config.DatabaseConfig import *
+from utils_list.Database import Database
+from utils_list.BotServer import BotServer
+from utils_list.Preprocess import Preprocess
+from models.intent.IntentModel import IntentModel
+from models.sim.SimModel import SimModel
+from utils_list.FindAnswer import FindAnswer
+from models.ner.NerModel import NerModel
 
 # 전처리 객체 생성
-p = Preprocess(word2index_dic='chatbot3_last/train_tools/dict/chatbot_dict.bin',
-               userdic='chatbot3_last/utils/user_dic.tsv')
+p = Preprocess(word2index_dic='./train_tools/dict/chatbot_dict.bin',
+               userdic='./utils_list/user_dic.tsv')
 
 # 의도 파악 모델
-intent = IntentModel(model_name='chatbot3_last/models/intent/intent_model.h5', preprocess=p)
+intent = IntentModel(model_name='./models/intent/intent_model.h5', preprocess=p)
 
 # 유사도 분석 모델
 sim = SimModel(preprocess=p)
 
+# 개체명 인식 모델
+ner = NerModel(model_name='./models/ner/ner_model.h5', proprocess=p)
 
 def to_client(conn, addr, params):
   db = params['db']
@@ -52,6 +53,11 @@ def to_client(conn, addr, params):
       # 질문 임베딩
       embedding_data = sim.create_pt(query)
 
+      # 개체명 파악
+      ner_predicts = ner.predict(query)
+      ner_tags = ner.predict_tags(query)
+      #tagged_text = [word for word, tag in ner_predicts if tag in ner_tags]
+  
       # 답변 검색
       f = FindAnswer(db)
       if f != None :
@@ -62,7 +68,8 @@ def to_client(conn, addr, params):
               answer_text, answer_image = f.search_2(intent_name, embedding_data)
 
           else :
-              answer_text, answer_image = f.search_3(intent_name, )
+              tagged_text = f.tag_to_word(ner_predicts)
+              answer_text, answer_image = f.search_3(intent_name, tagged_text)
 
       #log = f"{query},{intent_name},{answer_text},{sim_result}"
 
@@ -73,8 +80,9 @@ def to_client(conn, addr, params):
           "Query" : query,
           "Answer": answer_text,
           "AnswerImageUrl" : answer_image,
-          "Intent": intent_name
-      }
+          "Intent": intent_name,
+          "NER": str(ner_predicts)
+        }
       message = json.dumps(send_json_data_str)
       conn.send(message.encode())
 

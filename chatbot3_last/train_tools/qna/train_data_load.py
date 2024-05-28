@@ -1,7 +1,7 @@
 import pymysql
 import openpyxl
 
-from chatbot3_last.config.DatabaseConfig import * # DB 접속 정보 불러오기
+from config.DatabaseConfig import * # DB 접속 정보 불러오기
 
 
 # 학습 데이터 초기화
@@ -41,7 +41,7 @@ def insert_data(db, xls_row):
         db.commit()
 
 
-train_file = './chatbot3_last/train_tools/qna/train_data_최종1.xlsx'
+train_file = './/train_tools/qna/train_data_최종1.xlsx'
 db = None
 try:
     # DB 호스트 정보에 맞게 입력해주세요
