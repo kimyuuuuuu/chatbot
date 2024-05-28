@@ -1,8 +1,8 @@
-from utils.Preprocess import Preprocess
+from chatbot1_ner.utils.Preprocess import Preprocess
 
 sent = "내일 오전 10시에 탕수육 주문하고 싶어 ㅋㅋ"
 
-p = Preprocess(userdic='utils/user_dic.tsv')
+p = Preprocess(userdic='./chatbot1_ner/utils/user_dic.tsv')
 
 pos = p.pos(sent)
 

@@ -45,6 +45,9 @@ class FindAnswer:
             # 변환해야하는 태그가 있는 경우 추가
             if tag == 'B_OG':
                 tagged_text = word
+
+            else :
+                tagged_text = "NONE"
         return tagged_text
     
     # 답변 검색
@@ -58,7 +61,7 @@ class FindAnswer:
     # 답변 검색
     def search_2(self, intent_name, embedding_data):
         # 유사도 분석 데이터
-        sim_data = torch.load('./models/sim/SBERT_embedding_Data.pt')
+        sim_data = torch.load('./chatbot3_last/models/sim/SBERT_embedding_Data.pt')
 
         cos_sim = util.cos_sim(embedding_data, sim_data)
         best_sim_idx = int(np.argmax(cos_sim)) # cos_sim의 최대값의 인덱스 반환
@@ -90,16 +93,34 @@ class FindAnswer:
         club_info = self.db.select_one(sql)
 
         if intent_name == "소개":
-            return "동아리 {}에 대한 소개입니다: {}".format(club_info['club_name'], club_info['introducation'])
+            answer_text =  "동아리 {}에 대한 소개입니다: {}".format(club_info['club_name'], club_info['introducation'])
+            answer_image = None
+            return (answer_text, answer_image)
+        
         elif intent_name == "종류" :
-            return "{} 동아리는 다음과 같습니다.: {}".format(club_info['type'], club_info['club_name'])
+            answer_text = "{} 동아리는 다음과 같습니다.: {}".format(club_info['type'], club_info['club_name'])
+            answer_image = None
+            return (answer_text, answer_image)
+        
         elif intent_name == "가입방법":
-            return "동아리 {}의 가입 방법은: {}".format(club_info['club_id'], club_info['join'])
+            answer_text = "동아리 {}의 가입 방법은: {}".format(club_info['club_id'], club_info['join'])
+            answer_image = None
+            return (answer_text, answer_image)
+        
         elif intent_name == "위치":
-            return "동아리 {}의 위치는: {}".format(club_info['club_id'], club_info['location'])
+            answer_text = "동아리 {}의 위치는: {}".format(club_info['club_id'], club_info['location'])
+            answer_image = None
+            return (answer_text, answer_image)
+
         elif intent_name == "활동":
-            return "동아리 {}의 주요 활동은: {}".format(club_info['club_id'], club_info['activity'])
+            answer_text = "동아리 {}의 주요 활동은: {}".format(club_info['club_id'], club_info['activity'])
+            answer_image = None
+            return (answer_text, answer_image)
+
         elif intent_name == "회비":
-            return "동아리 {}의 회비는: {}".format(club_info['club_id'], club_info['fee'])
+            answer_text = "동아리 {}의 회비는: {}".format(club_info['club_id'], club_info['fee'])
+            answer_image = None
+            return (answer_text, answer_image)
+        
         else:
-            return "무슨 말인지 모르겠어요."
+            answer_text = "무슨 말인지 모르겠어요."
