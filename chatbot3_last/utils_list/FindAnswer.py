@@ -35,17 +35,17 @@ class FindAnswer:
             sql = " SELECT * FROM club_introduce_club WHERE club_name = '{}'".format(tagged_text)
 
         else :
-            sql = " SELECT club_name FROM club_introduce_clubdetail WHERE club_id = '{}'".format(tagged_text)
+            sql = " SELECT * FROM club_introduce_clubdetail WHERE club_id = '{}'".format(tagged_text)
         
         return sql
 
     # NER 태그를 실제 입력된 단어로 변환
     def tag_to_word(self, ner_predicts):
         for word, tag in ner_predicts:
-            # 변환해야하는 태그가 있는 경우 추가
+                # 변환해야하는 태그가 있는 경우 추가
             if tag == 'B_OG':
                 tagged_text = word
-
+                break
             else :
                 tagged_text = "NONE"
         return tagged_text

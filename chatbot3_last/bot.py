@@ -55,9 +55,9 @@ def to_client(conn, addr, params):
 
       # 개체명 파악
       ner_predicts = ner.predict(query)
+      #print(ner_predicts)
       #ner_tags = ner.predict_tags(query)
-      #tagged_text = [word for word, tag in ner_predicts if tag in ner_tags]
-  
+      #print(ner_tags)
       # 답변 검색
       f = FindAnswer(db)
       if f != None :
@@ -69,6 +69,7 @@ def to_client(conn, addr, params):
 
           else :
               tagged_text = f.tag_to_word(ner_predicts)
+              print(tagged_text, type(tagged_text))
               answer_text, answer_image = f.search_3(intent_name, tagged_text)
 
       #log = f"{query},{intent_name},{answer_text},{sim_result}"
