@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow import keras
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras import preprocessing
 
@@ -11,7 +12,7 @@ class IntentModel:
         self.labels = {0: "인사", 1: "욕설", 2: "종류", 3: "소개", 4: "기타", 5: "가입방법", 6: "위치", 7: "활동", 8: "생성", 9: "회비", 10: "분류"}
 
         # 의도 분류 모델 불러오기
-        self.model = load_model(model_name)
+        self.model = keras.models.load_model(model_name)
 
         # 챗봇 Preprocess 객체
         self.p = preprocess

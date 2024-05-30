@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras.models import Model, load_model
+from tensorflow.keras.models import load_model
 from tensorflow.keras import preprocessing
 
 

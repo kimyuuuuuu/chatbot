@@ -4,7 +4,7 @@ import tensorflow as tf
 from tensorflow.keras import preprocessing
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Embedding, Dense, Dropout, Conv1D, GlobalMaxPool1D, concatenate
-from keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping
 
 
 # 데이터 읽어오기
@@ -117,4 +117,4 @@ print('loss: %f' % (loss))
 
 
 # 모델 저장  ○8
-model.save('./models/intent/intent_model.h5')
+model.save('./models/intent/intent_model.keras')

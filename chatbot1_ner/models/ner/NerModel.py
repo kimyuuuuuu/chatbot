@@ -1,7 +1,8 @@
 import tensorflow as tf
 import numpy as np
-from tensorflow.keras.models import Model, load_model
+#from tensorflow.keras.models import Model, load_model
 from tensorflow.keras import preprocessing
+import keras 
 
 
 # 개체명 인식 모델 모듈
@@ -12,8 +13,8 @@ class NerModel:
         self.index_to_ner = {1: 'O', 2: 'B_OG', 3: 'I', 0: 'PAD'}
 
         # 의도 분류 모델 불러오기
-        self.model = load_model(model_name)
-
+        model = keras.models.load_model('./chatbot1_ner/models/ner/ner_model_NER3')
+        self.model = keras.models.Sequential(model.layers)
         # 챗봇 Preprocess 객체
         self.p = proprocess
 

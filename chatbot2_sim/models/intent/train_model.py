@@ -1,10 +1,9 @@
-# 필요한 모듈 임포트
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import preprocessing
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Embedding, Dense, Dropout, Conv1D, GlobalMaxPool1D, concatenate
-from keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping
 
 
 # 데이터 읽어오기
@@ -116,4 +115,4 @@ print('loss: %f' % (loss))
 
 
 # 모델 저장  ○8
-model.save('chatbot2_sim/models/intent/intent_model.h5')
+tf.saved_model.save(model, './chatbot2_sim/models/intent/intent_model_last.h5')

@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-plt.interactive(False)
 import tensorflow as tf
 from tensorflow.keras import preprocessing
 from sklearn.model_selection import train_test_split
@@ -107,7 +105,7 @@ model.compile(loss='categorical_crossentropy', optimizer=Adam(0.01), metrics=['a
 model.fit(x_train, y_train, batch_size=128, epochs=10)
 
 print("평가 결과 : ", model.evaluate(x_test, y_test)[1])
-model.save('./models/ner/ner_model_testNER3.h5')
+model.save('./chatbot1_ner/models/ner/ner_model_NER4.keras')
 
 
 # 시퀀스를 NER 태그로 변환
