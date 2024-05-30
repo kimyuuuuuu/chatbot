@@ -115,4 +115,4 @@ print('loss: %f' % (loss))
 
 
 # 모델 저장  ○8
-tf.saved_model.save(model, './chatbot2_sim/models/intent/intent_model_last.h5')
+tf.saved_model.save(model, './chatbot2_sim/models/intent/intent_model.h5')
