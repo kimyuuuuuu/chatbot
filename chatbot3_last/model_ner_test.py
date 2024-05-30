@@ -2,7 +2,7 @@ from chatbot3_last.utils_list.Preprocess import Preprocess
 from chatbot3_last.models.ner.NerModel import NerModel
 
 p = Preprocess(word2index_dic='./chatbot3_last/train_tools/dict/chatbot_dict.bin',
-               userdic='./chatbot3_last/utils/user_dic.tsv')
+               userdic='./chatbot3_last/utils_list/user_dic.tsv')
 
 
 ner = NerModel(model_name='./chatbot3_last/models/ner/ner_model_NER4.h5', proprocess=p)
