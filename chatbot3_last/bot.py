@@ -21,7 +21,7 @@ intent = IntentModel(model_name='./chatbot3_last/models/intent/intent_model.h5',
 sim = SimModel(preprocess=p)
 
 # 개체명 인식 모델
-ner = NerModel(model_name='./chatbot3_last/models/ner/ner_model_NER4.h5', proprocess=p)
+ner = NerModel(model_name='./chatbot3_last/models/ner/ner_model.h5', proprocess=p)
 
 def to_client(conn, addr, params):
   db = params['db']

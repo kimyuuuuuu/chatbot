@@ -69,30 +69,30 @@ conv1 = Conv1D(
     filters=128,
     kernel_size=3,
     padding='valid',
-    activation=tf.nn.relu)(dropout_emb)
+    activation='relu')(dropout_emb)
 pool1 = GlobalMaxPool1D()(conv1)
 
 conv2 = Conv1D(
     filters=128,
     kernel_size=4,
     padding='valid',
-    activation=tf.nn.relu)(dropout_emb)
+    activation='relu')(dropout_emb)
 pool2 = GlobalMaxPool1D()(conv2)
 
 conv3 = Conv1D(
     filters=128,
     kernel_size=5,
     padding='valid',
-    activation=tf.nn.relu)(dropout_emb)
+    activation='relu')(dropout_emb)
 pool3 = GlobalMaxPool1D()(conv3)
 
 # 3,4,5gram 이후 합치기
 concat = concatenate([pool1, pool2, pool3])
 
-hidden = Dense(128, activation=tf.nn.relu)(concat)
+hidden = Dense(128, activation='relu')(concat)
 dropout_hidden = Dropout(rate=dropout_prob)(hidden)
 logits = Dense(11, name='logits')(dropout_hidden) # 출력 개수 잘 맞춰주기
-predictions = Dense(11, activation=tf.nn.softmax)(logits) # 출력 개수 잘 맞춰주기
+predictions = Dense(11, activation='softmax')(logits) # 출력 개수 잘 맞춰주기
 
 
 # 모델 생성  ○5
