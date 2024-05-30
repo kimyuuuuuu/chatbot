@@ -1,0 +1,6 @@
+### venv
+
+# Virtual environment
+
+.venv/
+\*.pyc
