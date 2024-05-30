@@ -5,7 +5,7 @@ p = Preprocess(word2index_dic='./chatbot3_last/train_tools/dict/chatbot_dict.bin
                userdic='./chatbot3_last/utils_list/user_dic.tsv')
 
 
-ner = NerModel(model_name='./chatbot3_last/models/ner/ner_model_NER4.h5', proprocess=p)
+ner = NerModel(model_name='./chatbot3_last/models/ner/ner_model.h5', proprocess=p)
 query = ['학습동아리에 대해 알려줘']
 
 for i in query :
