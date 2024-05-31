@@ -115,4 +115,4 @@ print('loss: %f' % (loss))
 
 
 # 모델 저장  ○8
-model.save('./chatbot2_sim/models/intent/intent_model.h5')
+model.save('./chatbot2_sim/models/intent/intent_model.keras')

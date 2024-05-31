@@ -1,8 +1,12 @@
 import tensorflow as tf
 from tensorflow.keras import preprocessing
+from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.layers import LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidirectional
+from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 import numpy as np
 from chatbot1_ner.utils.Preprocess import Preprocess
+
 
 # 학습 파일 불러오기
 def read_file(file_name):
@@ -91,22 +95,25 @@ print("학습 샘플 레이블 형상 : ", y_train.shape)
 print("테스트 샘플 시퀀스 형상 : ", x_test.shape)
 print("테스트 샘플 레이블 형상 : ", y_test.shape)
 
-
-# 모델 정의 (Bi-LSTM)
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidirectional
-from tensorflow.keras.optimizers import Adam
-
 model = Sequential()
 model.add(Embedding(input_dim=vocab_size, output_dim=30, input_length=max_len, mask_zero=True))
 model.add(Bidirectional(LSTM(200, return_sequences=True, dropout=0.50, recurrent_dropout=0.25)))
 model.add(TimeDistributed(Dense(tag_size, activation='softmax')))
-model.compile(loss='categorical_crossentropy', optimizer=Adam(0.01), metrics=['accuracy'])
+model.compile(optimizer=Adam(0.01), loss='categorical_crossentropy', metrics=['accuracy'])
+
 model.fit(x_train, y_train, batch_size=128, epochs=10)
 
 print("평가 결과 : ", model.evaluate(x_test, y_test)[1])
-model.save('./chatbot1_ner/models/ner/ner_model.h5')
+model.save('./chatbot1_ner/models/ner/ner_model.keras')
 
+# load model
+
+# loded_model = load_model('./chatbot1_ner/models/ner/ner_model.keras')
+
+# loded_model.compile(loss='categorical_crossentropy', optimizer=Adam(0.01), metrics=['accuracy'])
+# loded_results = loded_model.evaluate(x_test, y_test)[1]
+
+# print(loded_results)
 
 # 시퀀스를 NER 태그로 변환
 def sequences_to_tag(sequences):  # 예측값을 index_to_ner를 사용하여 태깅 정보로 변경하는 함수.
@@ -118,7 +125,6 @@ def sequences_to_tag(sequences):  # 예측값을 index_to_ner를 사용하여 �
             temp.append(index_to_ner[pred_index].replace("PAD", "O"))  # 'PAD'는 'O'로 변경
         result.append(temp)
     return result
-
 
 # f1 스코어 계산을 위해 사용
 from seqeval.metrics import f1_score, classification_report
