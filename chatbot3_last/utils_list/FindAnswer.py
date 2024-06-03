@@ -90,37 +90,46 @@ class FindAnswer:
     def search_3(self, intent_name, tagged_text) :
         # 개체명으로 백엔드 DB 검색
         sql = self._make_query_3(intent_name, tagged_text)
-        club_info = self.db.select_one(sql)
+        try :
+            club_info = self.db.select_one(sql)
 
-        if intent_name == "소개":
-            answer_text =  "동아리 {}에 대한 소개입니다: {}".format(club_info['club_name'], club_info['introducation'])
-            answer_image = None
-            return (answer_text, answer_image)
-        
-        elif intent_name == "종류" :
-            answer_text = "{} 동아리는 다음과 같습니다.: {}".format(club_info['type'], club_info['club_name'])
-            answer_image = None
-            return (answer_text, answer_image)
-        
-        elif intent_name == "가입방법":
-            answer_text = "동아리 {}의 가입 방법은: {}".format(club_info['club_id'], club_info['join'])
-            answer_image = None
-            return (answer_text, answer_image)
-        
-        elif intent_name == "위치":
-            answer_text = "동아리 {}의 위치는: {}".format(club_info['club_id'], club_info['location'])
-            answer_image = None
-            return (answer_text, answer_image)
+        except Exception as e:
+            club_info = None
 
-        elif intent_name == "활동":
-            answer_text = "동아리 {}의 주요 활동은: {}".format(club_info['club_id'], club_info['activity'])
-            answer_image = None
-            return (answer_text, answer_image)
+        if club_info != None:
+            if intent_name == "소개":
+                answer_text =  "동아리 {}에 대한 소개입니다: {}".format(club_info['club_name'], club_info['introducation'])
+                print(club_info['club_name'])
+                answer_image = None
+                return (answer_text, answer_image)
+            
+            elif intent_name == "종류" :
+                answer_text = "{} 동아리는 다음과 같습니다.: {}".format(club_info['type'], club_info['club_name'])
+                answer_image = None
+                return (answer_text, answer_image)
+            
+            elif intent_name == "가입방법":
+                answer_text = "동아리 {}는 가입 방법은: {}".format(club_info['club_id'], club_info['join'])
+                answer_image = None
+                return (answer_text, answer_image)
+            
+            elif intent_name == "위치":
+                answer_text = "동아리 {}의 위치는: {}".format(club_info['club_id'], club_info['location'])
+                answer_image = None
+                return (answer_text, answer_image)
 
-        elif intent_name == "회비":
-            answer_text = "동아리 {}의 회비는: {}".format(club_info['club_id'], club_info['fee'])
-            answer_image = None
-            return (answer_text, answer_image)
-        
-        else:
-            answer_text = "무슨 말인지 모르겠어요."
+            elif intent_name == "활동":
+                answer_text = "동아리 {}의 주요 활동은: {}".format(club_info['club_id'], club_info['activity'])
+                answer_image = None
+                return (answer_text, answer_image)
+
+            elif intent_name == "회비":
+                answer_text = "동아리 {}의 회비는: {}".format(club_info['club_id'], club_info['fee'])
+                answer_image = None
+                return (answer_text, answer_image)
+            
+            else:
+                answer_text = "무슨 말인지 모르겠어요."
+
+        else :
+            return (None, None) 

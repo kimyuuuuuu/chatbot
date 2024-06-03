@@ -7,15 +7,24 @@ port = 5050  # 챗봇 엔진 서버 통신 포트
 
 # 클라이언트 프로그램 시작
 while True:
+    # 챗봇 엔진 서버 연결
+    mySocket = socket.socket()
+    mySocket.connect((host, port))
+
+    # 웰컴 메세지 받기
+    welcome_data = mySocket.recv(2048).decode()
+    welcome_ret_data = json.loads(welcome_data)
+    print("Answer: ")
+    print(welcome_ret_data['Answer'])
+    print("\n" + "-" * 40)
+
+    # 질문 시작
     print("질문 : ")
     query = input()  # 질문 입력
     if(query == "exit"):
         exit(0)
     print("-" * 40)
 
-    # 챗봇 엔진 서버 연결
-    mySocket = socket.socket()
-    mySocket.connect((host, port))
 
     # 챗봇 엔진 질의 요청
     json_data = {

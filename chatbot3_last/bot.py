@@ -34,6 +34,15 @@ def to_client(conn, addr, params):
       print('===========================')
       print('Connection from: %s' % str(addr))
 
+    #   welcome_msg = {
+    #       "Query": "",
+    #       "Answer": "안녕하세요! 릉주대 챗봇 강원동입니다. 저희는 사이트 내 데이터에 기반하고 있지만, 데이터가 업데이트 되지 않아 달라진 부분이 있을 수 있으니, 중요한 내용은 꼭 해당 동아리에 문의하시기 바랍니다. 무엇을 도와드릴까요?",
+    #       "AnswerImageUrl": None,
+    #       "Intent": "환영 인사",
+    #       "NER": ""
+    #   }
+    #   conn.send(json.dumps(welcome_msg).encode())
+
       if read is None or not read:
           # 클라이언트 연결이 끊어지거나, 오류가 있는 경우
           print('클라이언트 연결 끊어짐')
@@ -71,11 +80,9 @@ def to_client(conn, addr, params):
               tagged_text = f.tag_to_word(ner_predicts)
               print(tagged_text, type(tagged_text))
               answer_text, answer_image = f.search_3(intent_name, tagged_text)
-
-      #log = f"{query},{intent_name},{answer_text},{sim_result}"
-
-      #with open('./chatbot3_last/log.txt', 'a',encoding='utf-8') as log_file:
-      #    log_file.write(log + '\n')
+              if answer_text == None :
+                  answer_text, answer_image = f.search_2(intent_name, embedding_data)
+                  answer_text = answer_text + '\n이 답변은 업데이트 되지 않은 답변이니 자세한 사항은 동아리로 직접 문의 하시기 바랍니다.'
 
       send_json_data_str = {
           "Query" : query,
