@@ -12,8 +12,8 @@ while True:
     mySocket.connect((host, port))
 
     # 웰컴 메세지 받기
-    print(mySocket.recv(2048).decode())
-    
+    #print(mySocket.recv(2048).decode())
+
     # 질문 시작
     print("질문 : ")
     query = input()  # 질문 입력

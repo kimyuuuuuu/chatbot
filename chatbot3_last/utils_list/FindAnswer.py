@@ -88,7 +88,7 @@ class FindAnswer:
 
             return (answer_text, answer_image)
 
-    def search_3(self, intent_name, tagged_text) :
+    def search_3(self, intent_name, tagged_text, embedding_data) :
         # 개체명으로 백엔드 DB 검색
         sql = self._make_query_3(intent_name, tagged_text)
         try :
@@ -133,7 +133,33 @@ class FindAnswer:
                 return (answer_text, answer_image)
         
             else:
-                return (answer_text, answer_image) 
-            
+                # 유사도 분석 데이터
+                sim_data = torch.load('./chatbot3_last/models/sim/SBERT_embedding_Data.pt')
+
+                cos_sim = util.cos_sim(embedding_data, sim_data)
+                best_sim_idx = int(np.argmax(cos_sim)) # cos_sim의 최대값의 인덱스 반환
+                best_sim = cos_sim[0, best_sim_idx].item()  # item()을 사용하여 Python float으로 변환
+                sql = self._make_query_2(best_sim_idx+1)
+                answer = self.db.select_one(sql)
+                #print(answer, type(answer))
+                print(best_sim)
+                print(answer['answer'], answer['answer_image'])
+                
+                if answer['intent'] == intent_name :
+                    #answer = df['답변(Answer)'][best_sim_idx]
+                    #imageUrl = df['답변 이미지'][best_sim_idx]
+                    print("True")
+                    answer_text = answer['answer'] + '\n이 답변은 업데이트 되지 않은 답변이니 자세한 사항은 동아리로 직접 문의 하시기 바랍니다.'
+                    return (answer_text, answer['answer_image'])
+                    #return (answer, imageUrl)
+                    
+
+                else :
+                    print("False")
+                    answer_text = "죄송해요 무슨 말인지 모르겠어요. 조금 더 공부 할게요."
+                    answer_image = None
+
+                    return (answer_text, answer_image)
+               
         else :
             return (None, None) 
