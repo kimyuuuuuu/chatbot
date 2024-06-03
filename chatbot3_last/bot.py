@@ -34,15 +34,6 @@ def to_client(conn, addr, params):
       print('===========================')
       print('Connection from: %s' % str(addr))
 
-    #   welcome_msg = {
-    #       "Query": "",
-    #       "Answer": "안녕하세요! 릉주대 챗봇 강원동입니다. 저희는 사이트 내 데이터에 기반하고 있지만, 데이터가 업데이트 되지 않아 달라진 부분이 있을 수 있으니, 중요한 내용은 꼭 해당 동아리에 문의하시기 바랍니다. 무엇을 도와드릴까요?",
-    #       "AnswerImageUrl": None,
-    #       "Intent": "환영 인사",
-    #       "NER": ""
-    #   }
-    #   conn.send(json.dumps(welcome_msg).encode())
-
       if read is None or not read:
           # 클라이언트 연결이 끊어지거나, 오류가 있는 경우
           print('클라이언트 연결 끊어짐')
@@ -125,7 +116,7 @@ if __name__ == '__main__':
         params = {
             "db": db
         }
-
+        conn.send("안녕하세요! 릉주대 챗봇 강원동입니다. 저희는 사이트 내 데이터에 기반하고 있지만, 데이터가 업데이트 되지 않아 달라진 부분이 있을 수 있으니, 중요한 내용은 꼭 해당 동아리에 문의하시기 바랍니다. 무엇을 도와드릴까요?".encode())
         client = threading.Thread(target=to_client, args=(
             conn,
             addr,

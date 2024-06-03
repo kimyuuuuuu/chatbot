@@ -50,6 +50,7 @@ class FindAnswer:
                 tagged_text = "NONE"
         return tagged_text
     
+    
     # 답변 검색
     def search_1(self, intent_name):
         # 의도명으로 답변 검색
@@ -97,39 +98,42 @@ class FindAnswer:
             club_info = None
 
         if club_info != None:
-            if intent_name == "소개":
+            if intent_name == "소개" and club_info['introducation'] != None:
                 answer_text =  "동아리 {}에 대한 소개입니다: {}".format(club_info['club_name'], club_info['introducation'])
-                print(club_info['club_name'])
-                answer_image = None
+                if club_info['logo'] != None :
+                    answer_image = club_info['logo']
+                else :
+                    answer_image = None
                 return (answer_text, answer_image)
-            
+        
             elif intent_name == "종류" :
                 answer_text = "{} 동아리는 다음과 같습니다.: {}".format(club_info['type'], club_info['club_name'])
                 answer_image = None
                 return (answer_text, answer_image)
             
-            elif intent_name == "가입방법":
-                answer_text = "동아리 {}는 가입 방법은: {}".format(club_info['club_id'], club_info['join'])
+            
+            elif intent_name == "가입방법" and club_info['join'] != None:
+                answer_text = "동아리 {}의 가입 방법은: {}".format(club_info['club_id'], club_info['join'])
                 answer_image = None
                 return (answer_text, answer_image)
             
-            elif intent_name == "위치":
+            elif intent_name == "위치" and club_info['location'] != None :
                 answer_text = "동아리 {}의 위치는: {}".format(club_info['club_id'], club_info['location'])
                 answer_image = None
                 return (answer_text, answer_image)
 
-            elif intent_name == "활동":
+            elif intent_name == "활동" and club_info['activity'] != None :
                 answer_text = "동아리 {}의 주요 활동은: {}".format(club_info['club_id'], club_info['activity'])
                 answer_image = None
                 return (answer_text, answer_image)
 
-            elif intent_name == "회비":
+            elif intent_name == "회비" and club_info['fee'] != None:
                 answer_text = "동아리 {}의 회비는: {}".format(club_info['club_id'], club_info['fee'])
                 answer_image = None
                 return (answer_text, answer_image)
-            
+        
             else:
-                answer_text = "무슨 말인지 모르겠어요."
-
+                return (answer_text, answer_image) 
+            
         else :
             return (None, None) 
